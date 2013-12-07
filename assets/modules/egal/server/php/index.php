@@ -130,15 +130,22 @@ class CustomUploadHandler extends UploadHandler {
         return $this->generate_response($response, $print_response);
     }
     protected function get_file_objects($iteration_method = 'get_file_object') {
+        global $modx;
         $upload_dir = $this->get_upload_path();
         if (!is_dir($upload_dir)) {
             return array();
         }
 
+        $cId=$_REQUEST['content_id'];
+        @$sql=$modx->db->select("filename", $this->options['db_table'],"content_id=$cId","sortorder");
+
+        while ($row = $modx->db->getRow( $sql )) {
+            $tmp[] = $row['filename'];
+        }
+
+
         $arr = array_values(array_filter(array_map(
-            array($this, $iteration_method),
-            //$file
-            scandir($upload_dir)
+            array($this, $iteration_method), $tmp
         )));
 
         function sortByOrdering($obj1, $obj2) {
