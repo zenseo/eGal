@@ -329,10 +329,10 @@
         // Initialize the jQuery File Upload widget:
         $fileupload.fileupload({
             //disableImageResize: false,
-            autoUpload: true,
-//        always: function (e, data){
-//            for (var i = 0, len = $('#sortable1 li').length; i < len; i++) {$("#sortable1 li input[name*='sortorder']")[i].value = i + 1;}
-//        },
+            //autoUpload: true,
+        always: function (e, data){
+            console.log(data);
+        },
             previewMaxWidth: 148, previewMaxHeight: 180,
             //data: ({pId: pId, iW: iWidth, iH: iHeight}),
             url: 'server/php/index.php'
