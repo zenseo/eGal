@@ -45,15 +45,15 @@ if (isset($_REQUEST['content_id']) && !isset($_REQUEST['pId'])) {
 }
 
 
-if (isset($_REQUEST['pId'])) {
-    @$sql = $modx->db->select('content_id, iwidth, iheight, iquality, twidth, theight, tquality', $table1, "content_id='" . $_REQUEST['pId'] . "'");
+if (isset($_POST['pId'])) {
+    @$sql = $modx->db->select('content_id, iwidth, iheight, iquality, twidth, theight, tquality', $table1, "content_id='" . $_POST['pId'] . "'");
     $row = $modx->db->getRow($sql);
 
     if (!$row) {
-        $_REQUEST['content_id']=$_REQUEST['pId'];
-        unset($_REQUEST['pId']);
+        $_POST['content_id']=$_POST['pId'];
+        unset($_POST['pId']);
         update_settings();
-        @$sql = $modx->db->select('content_id, iwidth, iheight, iquality, twidth, theight, tquality', $table1, "content_id='" . $_REQUEST['content_id'] . "'");
+        @$sql = $modx->db->select('content_id, iwidth, iheight, iquality, twidth, theight, tquality', $table1, "content_id='" . $_POST['content_id'] . "'");
         $row = $modx->db->getRow($sql);
         echo json_encode($row);
     }
@@ -63,7 +63,7 @@ if (isset($_REQUEST['pId'])) {
 
 function update_settings() {
     global $modx, $table1;
-    $res = "( '" . implode("', '", $_REQUEST) . "' )";
+    $res = "( '" . implode("', '", $_POST) . "' )";
     $tt = $modx->db->query("INSERT INTO $table1 (content_id, iwidth, iheight, iquality, twidth, theight, tquality) VALUES $res ON DUPLICATE KEY UPDATE
     iheight = VALUES(iheight),
     iwidth = VALUES(iwidth),
