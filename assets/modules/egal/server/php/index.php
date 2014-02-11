@@ -185,6 +185,7 @@ protected function niceFilename($filename) {
         $alias = strtolower( $alias );
         $alias = preg_replace('/&.+?;/', '', $alias); // kill entities
         $alias = str_replace( '_', '-', $alias );
+        $alias = str_replace( ' ', '_', $alias );
         $alias = preg_replace('/[^a-z0-9\s-.]/', '', $alias);
         $alias = preg_replace('/\s+/', '-', $alias);
         $alias = preg_replace('|-+|', '-', $alias);
